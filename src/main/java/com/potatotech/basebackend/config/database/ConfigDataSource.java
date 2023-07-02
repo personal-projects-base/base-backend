@@ -16,7 +16,7 @@ public class ConfigDataSource implements CurrentTenantIdentifierResolver, Hibern
 
     @Override
     public String resolveCurrentTenantIdentifier() {
-        return currentTenant;
+        return TenantContext.getCurrentTenant() == null ? currentTenant : TenantContext.getCurrentTenant();
     }
 
     @Override

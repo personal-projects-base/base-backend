@@ -96,7 +96,7 @@
 		<dependency>
 			<groupId>com.potatotech</groupId>
 			<artifactId>authenticate-backend</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>
