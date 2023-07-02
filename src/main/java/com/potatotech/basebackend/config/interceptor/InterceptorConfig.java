@@ -20,7 +20,6 @@ public class InterceptorConfig extends Authenticate implements HandlerIntercepto
     private static final String AUTHORIZATION = "Authorization";
     private static final String TENANT = "tenant";
 
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
         var tenantConfiguration = new TenantConfiguration();
@@ -32,7 +31,8 @@ public class InterceptorConfig extends Authenticate implements HandlerIntercepto
 
 
         if(!tenantConfiguration.validAnonymous(handler)){
-            this.isAuthenticated(auth);
+            var user = this.isAuthenticated(auth);
+            TenantContext.setCurrentTenant(user.getTenant());
         } else {
             if(tenant == null){
                 throw new ServiceException(HttpStatus.FORBIDDEN,"tenant is required");
