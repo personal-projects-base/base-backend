@@ -1,5 +1,6 @@
 package com.potatotech.basebackend.config.healthcheck;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,11 +17,13 @@ import java.util.Optional;
 @RequestMapping
 public class StatusApi {
 
+    @Value("${server.servlet.context-path}")
+    String serviceName;
 
     @GetMapping("/status")
     public ResponseEntity<?> getStatus(){
         Map<String, Object> response = new LinkedHashMap<>();
-        response.put("service","PRODUCT");
+        response.put("service",serviceName.replace("/","").toUpperCase());
         response.put("status","up");
         response.put("httpStatus", HttpStatus.OK.value());
         return ResponseEntity.of(Optional.of(response));

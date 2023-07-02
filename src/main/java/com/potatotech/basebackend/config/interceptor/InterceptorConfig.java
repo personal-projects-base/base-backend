@@ -1,6 +1,6 @@
 package com.potatotech.basebackend.config.interceptor;
 
-import com.potatotech.basebackend.config.security.SecurityService;
+import com.potatotech.authenticate.security.Authenticate;
 import feign.Request;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,13 +11,12 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class InterceptorConfig implements HandlerInterceptor, WebMvcConfigurer {
+public class InterceptorConfig extends Authenticate implements HandlerInterceptor, WebMvcConfigurer  {
 
 
     private static final String AUTHORIZATION = "Authorization";
 
-    @Autowired
-    private SecurityService securityService;
+
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
@@ -26,7 +25,7 @@ public class InterceptorConfig implements HandlerInterceptor, WebMvcConfigurer {
         }
         var auth = request.getHeader(AUTHORIZATION);
 
-        securityService.isAuthenticated(auth);
+        this.isAuthenticated(auth);
         return true;
     }
 
