@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @EnableRabbit
 @SpringBootApplication
-public class BaseBackendApplication {
+public class StarterApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BaseBackendApplication.class, args);
+		SpringApplication.run(StarterApplication.class, args);
 	}
 
 }
