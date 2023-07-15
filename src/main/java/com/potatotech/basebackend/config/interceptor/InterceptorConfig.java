@@ -29,7 +29,6 @@ public class InterceptorConfig extends Authenticate implements HandlerIntercepto
         var auth = request.getHeader(AUTHORIZATION);
         var tenant = request.getHeader(TENANT);
 
-
         if(!tenantConfiguration.validAnonymous(handler)){
             var user = this.isAuthenticated(auth);
             TenantContext.setCurrentTenant(user.getTenant());

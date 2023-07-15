@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.potatotech</groupId>
 	<artifactId>base-backend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>base-backend</name>
 	<description>base-backend</description>
 	<properties>
