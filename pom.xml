@@ -119,6 +119,11 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>com.potatotech</groupId>
+				<artifactId>entity-generator</artifactId>
+				<version>0.0.6</version>
+			</plugin>
+			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>

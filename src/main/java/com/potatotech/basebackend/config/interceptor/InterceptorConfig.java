@@ -18,7 +18,7 @@ public class InterceptorConfig extends Authenticate implements HandlerIntercepto
 
 
     private static final String AUTHORIZATION = "Authorization";
-    private static final String TENANT = "tenant";
+    private static final String TENANT = "Xtenant";
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){

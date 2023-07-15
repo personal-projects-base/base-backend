@@ -10,9 +10,9 @@ public class ConfigContextImpl implements ConfigContext {
     @Override
     public String getUrl() {
         return switch (System.getenv(EnumConfigContext.DB_NAME.name())){
-            case "POSTGRES" -> "jdbc:postgresql://localhost:5434/"+this.getDatabase();
-            case "MYSQL" -> "jdbc:postgresql://localhost:5434/"+this.getDatabase();
-            case "SQLSERVER" -> "jdbc:postgresql://localhost:5434/"+this.getDatabase();
+            case "POSTGRES" -> "jdbc:postgresql://localhost:5432/"+this.getDatabase();
+            case "MYSQL" -> "jdbc:postgresql://localhost:5432/"+this.getDatabase();
+            case "SQLSERVER" -> "jdbc:postgresql://localhost:5432/"+this.getDatabase();
             default -> "";
 
         };
