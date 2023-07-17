@@ -1,6 +1,6 @@
 package com.potatotech.basebackend.config.database;
 
-import com.potatotech.basebackend.StarterApplication;
+import com.potatotech.StarterApplication;
 import org.hibernate.cfg.Environment;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
