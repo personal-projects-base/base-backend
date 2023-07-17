@@ -41,7 +41,8 @@ public class HibernateConfig {
 
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
-        em.setPackagesToScan(String.format("%s.*", StarterApplication.class.getPackage()));
+        em.setPersistenceUnitName("persistensea");
+        em.setPackagesToScan(StarterApplication.class.getPackage().getName());
         em.setJpaVendorAdapter(jpaVendorAdapter());
         em.setJpaPropertyMap(properties);
         return em;

@@ -1,4 +1,4 @@
-package com.potatotech.basebackend;
+package com.potatotech;
 
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.boot.SpringApplication;
