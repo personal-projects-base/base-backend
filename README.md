@@ -11,3 +11,10 @@ Definir as seguintes variaveis de ambiente
     SECRET_JWT=<Secret JWT>
     SERVER_PORT=<POrta servidor>
     SERVICE_NAME=<NOme do serviço>
+
+O projeto é configurado para ser multitenancy com locatarios usando schemas
+
+sendo assim os schemas da base deven ser cirados usando o seguinte padrão:
+
+"NOMEBANCO_NOMESCHEMA" ambos em maiusculo, para manter um padrão, mas o nome do schema não precisa ser necessariamente maiusculo
+basta estar de acordo com o cadastrado na tabela user_supplier
