@@ -4,9 +4,11 @@ import com.potatotech.authenticate.exception.ServiceException;
 import com.potatotech.authenticate.security.Authenticate;
 import com.potatotech.authenticate.tenant.TenantConfiguration;
 import com.potatotech.basebackend.config.database.TenantContext;
+import com.potatotech.basebackend.config.migration.DBMigration;
 import feign.Request;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -17,6 +19,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class InterceptorConfig extends Authenticate implements HandlerInterceptor, WebMvcConfigurer  {
 
 
+    @Autowired
+    DBMigration dbMigration;
     private static final String AUTHORIZATION = "Authorization";
     private static final String TENANT = "Xtenant";
 
@@ -38,6 +42,7 @@ public class InterceptorConfig extends Authenticate implements HandlerIntercepto
             }
             TenantContext.setCurrentTenant(tenant);
         }
+        dbMigration.loadMigrateTenants(tenant);
         return true;
     }
 
