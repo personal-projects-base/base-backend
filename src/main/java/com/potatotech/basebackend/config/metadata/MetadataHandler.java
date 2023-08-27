@@ -1,7 +1,7 @@
 package com.potatotech.basebackend.config.metadata;
 
 import com.potatotech.StarterApplication;
-import com.potatotech.authenticate.stereotype.Anonymous;
+import com.potatotech.authorization.stereotype.Anonymous;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

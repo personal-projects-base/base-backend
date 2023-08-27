@@ -1,6 +1,7 @@
 package com.potatotech.basebackend.config.exceptions;
 
-import com.potatotech.authenticate.exception.ServiceException;
+
+import com.potatotech.authorization.exception.ServiceException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
