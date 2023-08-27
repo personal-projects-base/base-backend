@@ -36,7 +36,7 @@ public class MultiTenantConnectionProviderImpl implements MultiTenantConnectionP
     public Connection getConnection(String tenantIdentifier) throws SQLException {
         final Connection connection = getAnyConnection();
         try {
-            connection.createStatement().execute(String.format("SET SCHEMA '%s_%s'",configContext.getDatabase().toUpperCase(), TenantContext.getCurrentTenant()));
+            connection.createStatement().execute(String.format("SET SCHEMA '%s_%s'",configContext.getDatabase().toUpperCase(), TenantContext.getCurrentTenant().toUpperCase()));
         } catch (SQLException e) {
             throw new HibernateException("Não foi possivel alterar para o schema [" + tenantIdentifier + "]", e);
         }
