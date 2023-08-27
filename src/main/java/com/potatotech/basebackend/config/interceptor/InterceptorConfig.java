@@ -3,7 +3,7 @@ package com.potatotech.basebackend.config.interceptor;
 import com.potatotech.authenticate.exception.ServiceException;
 import com.potatotech.authenticate.security.Authenticate;
 import com.potatotech.authenticate.tenant.TenantConfiguration;
-import com.potatotech.basebackend.config.database.TenantContext;
+import com.potatotech.basebackend.config.context.TenantContext;
 import com.potatotech.basebackend.config.migration.DBMigration;
 import feign.Request;
 import jakarta.servlet.http.HttpServletRequest;

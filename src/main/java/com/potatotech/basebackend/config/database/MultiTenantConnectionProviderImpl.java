@@ -1,6 +1,7 @@
 package com.potatotech.basebackend.config.database;
 
 import com.potatotech.basebackend.config.context.ConfigContextImpl;
+import com.potatotech.basebackend.config.context.TenantContext;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class MultiTenantConnectionProviderImpl implements MultiTenantConnectionP
     public Connection getConnection(String tenantIdentifier) throws SQLException {
         final Connection connection = getAnyConnection();
         try {
-            connection.createStatement().execute(String.format("SET SCHEMA '%s_%s'",configContext.getDatabase().toUpperCase(),TenantContext.getCurrentTenant()));
+            connection.createStatement().execute(String.format("SET SCHEMA '%s_%s'",configContext.getDatabase().toUpperCase(), TenantContext.getCurrentTenant()));
         } catch (SQLException e) {
             throw new HibernateException("Não foi possivel alterar para o schema [" + tenantIdentifier + "]", e);
         }
