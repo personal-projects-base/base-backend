@@ -17,6 +17,8 @@
 		<java.version>17</java.version>
 		<spring-cloud.version>2022.0.3</spring-cloud.version>
 		<jjwt.version>0.11.5</jjwt.version>
+		<authorization.version>1.0.2</authorization.version>
+		<entity-generatior.version>0.0.7</entity-generatior.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -95,8 +97,8 @@
 		</dependency>
 		<dependency>
 			<groupId>com.potatotech</groupId>
-			<artifactId>authenticate-backend</artifactId>
-			<version>1.0.1</version>
+			<artifactId>authorization-backend</artifactId>
+			<version>${authorization.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.flywaydb</groupId>
@@ -121,7 +123,7 @@
 			<plugin>
 				<groupId>com.potatotech</groupId>
 				<artifactId>entity-generator</artifactId>
-				<version>0.0.6</version>
+				<version>${entity-generatior.version}</version>
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

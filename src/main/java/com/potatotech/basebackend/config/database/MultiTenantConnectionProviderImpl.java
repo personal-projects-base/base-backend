@@ -1,7 +1,7 @@
 package com.potatotech.basebackend.config.database;
 
+import com.potatotech.authorization.tenant.TenantContext;
 import com.potatotech.basebackend.config.context.ConfigContextImpl;
-import com.potatotech.basebackend.config.context.TenantContext;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 import org.springframework.beans.factory.annotation.Autowired;
