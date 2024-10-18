@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+//@Configuration
 public class RabbitConfig {
 
     @Value("${rabbit.exchange.name}")
@@ -39,7 +39,7 @@ public class RabbitConfig {
                 .with(routingKeyProductStock);
     }
 
-    @Bean
+   // @Bean
     public MessageConverter jsonMessageConverter(){
         return new Jackson2JsonMessageConverter();
     }

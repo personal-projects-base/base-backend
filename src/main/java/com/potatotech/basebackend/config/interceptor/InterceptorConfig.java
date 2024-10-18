@@ -28,21 +28,34 @@ public class InterceptorConfig extends Authenticate implements HandlerIntercepto
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
         var tenantConfiguration = new TenantConfiguration();
+
+        String uri = request.getRequestURI();
+
+        if(uri.startsWith("/basebackend/swagger-ui/") || uri.startsWith("/basebackend/v3/")) {
+            return true;
+        }
+
+
         if(isOptions(request)){
             return true;
         }
         var auth = request.getHeader(AUTHORIZATION);
         var tenant = request.getHeader(TENANT);
-
-        if(!tenantConfiguration.validAnonymous(handler)){
-            var user = this.isAuthenticated(auth);
-            TenantContext.setCurrentTenant(user.getTenant());
-        } else {
-            if(tenant == null){
-                throw new ServiceException(HttpStatus.FORBIDDEN,"tenant is required");
-            }
-            TenantContext.setCurrentTenant(tenant);
+        if(tenant == null){
+            tenant = "public";
         }
+
+//        if(!tenantConfiguration.validAnonymous(handler)){
+//            var user = this.isAuthenticated(auth);
+//            TenantContext.setCurrentTenant(user.getTenant());
+//        } else {
+//            if(tenant == null){
+//                throw new ServiceException(HttpStatus.FORBIDDEN,"tenant is required");
+//            }
+//            TenantContext.setCurrentTenant(tenant);
+//        }
+
+        TenantContext.setCurrentTenant("public");
         dbMigration.loadMigrateTenants(tenant);
         return true;
     }

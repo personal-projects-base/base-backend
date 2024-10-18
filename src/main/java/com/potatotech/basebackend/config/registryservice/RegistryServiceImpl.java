@@ -23,6 +23,6 @@ public class RegistryServiceImpl{
         Hashtable<String, Object> hashtable = new Hashtable();
         hashtable.put("service", System.getenv(EnumConfigContext.SERVICE_NAME.name()));
         hashtable.put("port", System.getenv(EnumConfigContext.SERVER_PORT.name()));
-        this.registryService.registryService(hashtable);
+        //this.registryService.registryService(hashtable);
     }
 }

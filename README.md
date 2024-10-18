@@ -1,5 +1,7 @@
 # Getting Started
 
+#### [Swagger](http://localhost:8081/basebackend/swagger-ui/index.html)
+
 Ao copiar este projeto deve-se fazer as seguintes configurações:
 
 Definir as seguintes variaveis de ambiente
