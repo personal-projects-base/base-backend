@@ -6,13 +6,13 @@ Ao copiar este projeto deve-se fazer as seguintes configurações:
 
 Definir as seguintes variaveis de ambiente
 
-    DATABASE_SCHEMA_NAME=<nome >
-    DB_NAME=<No<me do banco |POSTGRES|MYSQL>
-    DB_PASSWORD=<Senha do bancp>
-    DB_USERNAME=<usuario banco>
-    SECRET_JWT=<Secret JWT>
-    SERVER_PORT=<POrta servidor>
-    SERVICE_NAME=<NOme do serviço>
+    DATABASE_SCHEMA_NAME=base_backend_java;
+    DB_NAME=POSTGRES;
+    DB_PASSWORD=229977@@##;
+    DB_USERNAME=postgres;
+    SECRET_JWT=;
+    SERVER_PORT=8081;
+    SERVICE_NAME=basebackend;
 
 O projeto é configurado para ser multitenancy com locatarios usando schemas
 

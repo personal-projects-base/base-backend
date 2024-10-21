@@ -325,7 +325,7 @@
           },
           "relationShips": {
             "fetchType": "LAZY",
-            "relationShip": "OneToOne"
+            "relationShip": "ManyToOne"
           }
         }
       ]
