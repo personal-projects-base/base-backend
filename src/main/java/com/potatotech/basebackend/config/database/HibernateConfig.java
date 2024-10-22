@@ -38,6 +38,8 @@ public class HibernateConfig {
         Map<String, Object> properties = new HashMap<>(jpaProperties.getProperties());
         properties.put(Environment.MULTI_TENANT_CONNECTION_PROVIDER, multiTenantConnectionProviderImpl);
         properties.put(Environment.MULTI_TENANT_IDENTIFIER_RESOLVER, currentTenantIdentifierResolverImpl);
+        properties.put(Environment.SHOW_SQL,true);
+        properties.put(Environment.FORMAT_SQL,true);
 
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);

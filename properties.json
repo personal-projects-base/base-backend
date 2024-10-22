@@ -6,6 +6,7 @@
     {
       "entityName": "pessoa",
       "tableName": "pessoa",
+      "generateDefaultHandlers": true,
       "entityFields": [
         {
           "comment": "Identificador único da pessoa",
@@ -63,6 +64,7 @@
     {
       "entityName": "pessoaJuridica",
       "tableName": "pessoaJuridica",
+      "generateDefaultHandlers": false,
       "entityFields": [
         {
           "comment": "Identificador único da pessoa juridica",
@@ -105,6 +107,7 @@
       "entityName": "city",
       "tableName": "city",
       "classExtends" : "custom",
+      "generateDefaultHandlers": false,
       "entityFields": [
         {
           "comment": "Identificador único da cidade",

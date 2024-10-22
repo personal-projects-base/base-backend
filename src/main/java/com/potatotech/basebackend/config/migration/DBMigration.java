@@ -25,7 +25,7 @@ public class DBMigration {
                 .createSchemas(true)
                 .load();
         fly.migrate();
-        tenants.add("public");
+
     }
 
 
