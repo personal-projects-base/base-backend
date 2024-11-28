@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS user_access(
+CREATE TABLE IF NOT EXISTS users(
       id uuid,
       name varchar,
       email varchar,

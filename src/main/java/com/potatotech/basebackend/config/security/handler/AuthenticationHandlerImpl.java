@@ -5,7 +5,7 @@ import com.potatotech.authorization.security.Authenticate;
 import com.potatotech.authorization.stereotype.Anonymous;
 
 import com.potatotech.basebackend.config.security.model.RegisterDTO;
-import com.potatotech.basebackend.config.security.model.UserSupplierDTO;
+import com.potatotech.basebackend.config.security.model.UsersDTO;
 import com.potatotech.basebackend.config.security.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +29,7 @@ public class AuthenticationHandlerImpl {
 
     @Anonymous
     @PostMapping("/authenticate")
-    public ResponseEntity<?> authenticate(@RequestBody UserSupplierDTO userSupplier){
+    public ResponseEntity<?> authenticate(@RequestBody UsersDTO userSupplier){
         var map = new Hashtable<>();
         var token = authenticationService.login(userSupplier);
         var user = authenticate.isAuthenticated(token);

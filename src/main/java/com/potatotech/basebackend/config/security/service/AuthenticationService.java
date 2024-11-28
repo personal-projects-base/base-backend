@@ -6,9 +6,10 @@ import com.potatotech.authorization.security.UserSupplier;
 import com.potatotech.authorization.tenant.TenantContext;
 
 import com.potatotech.basebackend.config.security.model.RegisterDTO;
-import com.potatotech.basebackend.config.security.model.UserSupplierDTO;
-import com.potatotech.basebackend.config.security.model.UserSupplierEntity;
+import com.potatotech.basebackend.config.security.model.UsersDTO;
+import com.potatotech.basebackend.config.security.model.UsersEntity;
 import com.potatotech.basebackend.config.security.repository.AuthenticationRepository;
+import com.potatotech.basebackend.services.email.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
-import java.util.UUID;
 
 @Service
 public class AuthenticationService {
@@ -25,15 +25,12 @@ public class AuthenticationService {
     AuthenticationRepository authenticationRepository;
 
     @Autowired
-    UserConfirmationRepository userConfirmationRepository;
-
-    @Autowired
     Authenticate authenticate;
 
     @Autowired
     EmailService emailService;
 
-    public String login(UserSupplierDTO userSupplierDTO){
+    public String login(UsersDTO userSupplierDTO){
         TenantContext.setCurrentTenant("admin");
         var userSupplierEntity = authenticationRepository.findOneByEmail(userSupplierDTO.email());
         if(userSupplierEntity.isPresent() && new BCryptPasswordEncoder().matches(userSupplierDTO.password(),userSupplierEntity.get().getPassword())){
@@ -48,7 +45,7 @@ public class AuthenticationService {
         return authenticate.isAuthenticated(token);
     }
 
-    private UserSupplier setUserSupplier(UserSupplierEntity userSupplier){
+    private UserSupplier setUserSupplier(UsersEntity userSupplier){
         var usersup =  UserSupplier.builder().build();
         usersup.setId(userSupplier.getId());
         usersup.setName(userSupplier.getName());
@@ -72,7 +69,7 @@ public class AuthenticationService {
         }
 
         var count = authenticationRepository.countAllBy();
-        var user = new UserSupplierEntity();
+        var user = new UsersEntity();
         user.setName(register.name());
         user.setEmail(register.email());
         var pass = new BCryptPasswordEncoder().encode(register.password());
