@@ -31,10 +31,9 @@ public class InterceptorConfig extends Authenticate implements HandlerIntercepto
 
         String uri = request.getRequestURI();
 
-        if(uri.startsWith("/basebackend/swagger-ui/") || uri.startsWith("/basebackend/v3/")) {
+        if(validateDomainsAllowAccess(uri)){
             return true;
         }
-
 
         if(isOptions(request)){
             return true;
@@ -58,6 +57,25 @@ public class InterceptorConfig extends Authenticate implements HandlerIntercepto
         TenantContext.setCurrentTenant("public");
         dbMigration.loadMigrateTenants(tenant);
         return true;
+    }
+
+    private boolean validateDomainsAllowAccess(String uri) {
+
+        // valida swagger
+        if(uri.startsWith("/church-lite/swagger-ui/") || uri.startsWith("/church-lite/v3/")) {
+            return true;
+        } // valida login e register
+        else if(uri.startsWith("/church-lite/authenticate") || uri.startsWith("/church-lite/register") || uri.startsWith("/church-lite/verifyURL")) {
+            TenantContext.setCurrentTenant("admin");
+            dbMigration.loadMigrateTenants("admin");
+            return true;
+        }
+        else if(uri.startsWith("/church-lite/error")) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 
