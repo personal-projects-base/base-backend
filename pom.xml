@@ -18,10 +18,18 @@
 		<spring-cloud.version>2022.0.3</spring-cloud.version>
 		<jjwt.version>0.11.5</jjwt.version>
 		<authorization.version>1.0.2</authorization.version>
-		<entity-generatior.version>0.0.18-SNAPSHOT</entity-generatior.version>
+		<entity-generatior.version>0.0.20-SNAPSHOT</entity-generatior.version>
 	</properties>
 	<dependencies>
-
+		<dependency>
+			<groupId>software.amazon.awssdk</groupId>
+			<artifactId>s3</artifactId>
+			<version>2.29.12</version> <!-- Use a versão mais recente -->
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
