@@ -5,6 +5,7 @@ import com.potatotech.authorization.exception.ServiceException;
 import com.potatotech.authorization.security.Authenticate;
 import com.potatotech.authorization.tenant.TenantConfiguration;
 import com.potatotech.authorization.tenant.TenantContext;
+import com.potatotech.basebackend.config.context.EnumConfigContext;
 import com.potatotech.basebackend.config.migration.DBMigration;
 import feign.Request;
 import jakarta.servlet.http.HttpServletRequest;
@@ -62,15 +63,15 @@ public class InterceptorConfig extends Authenticate implements HandlerIntercepto
     private boolean validateDomainsAllowAccess(String uri) {
 
         // valida swagger
-        if(uri.startsWith("/church-lite/swagger-ui/") || uri.startsWith("/church-lite/v3/")) {
+        if(uri.startsWith("/"+System.getenv(EnumConfigContext.SERVICE_NAME.name())+"/swagger-ui/") || uri.startsWith("/"+System.getenv(EnumConfigContext.SERVICE_NAME.name())+"/v3/")) {
             return true;
         } // valida login e register
-        else if(uri.startsWith("/church-lite/authenticate") || uri.startsWith("/church-lite/register") || uri.startsWith("/church-lite/verifyURL")) {
+        else if(uri.startsWith("/"+System.getenv(EnumConfigContext.SERVICE_NAME.name())+"/authenticate") || uri.startsWith("/"+System.getenv(EnumConfigContext.SERVICE_NAME.name())+"/register") || uri.startsWith("/"+System.getenv(EnumConfigContext.SERVICE_NAME.name())+"/verifyURL")) {
             TenantContext.setCurrentTenant("admin");
             dbMigration.loadMigrateTenants("admin");
             return true;
         }
-        else if(uri.startsWith("/church-lite/error")) {
+        else if(uri.startsWith("/"+System.getenv(EnumConfigContext.SERVICE_NAME.name())+"/error")) {
             return true;
         }
         else {
@@ -80,7 +81,7 @@ public class InterceptorConfig extends Authenticate implements HandlerIntercepto
 
 
     private boolean isOptions(HttpServletRequest request){
-        return Request.HttpMethod.OPTIONS.equals(request.getMethod());
+        return Request.HttpMethod.OPTIONS.name().equals(request.getMethod());
     }
 
     @Override
