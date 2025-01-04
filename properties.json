@@ -1,5 +1,5 @@
 {
-  "mainPackage": "com.potatotech.basebackend",
+  "mainPackage": "com.smartverse.basebackend",
   "language": "JAVA",
   "projectName": "base-backend",
   "entities": [],
