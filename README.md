@@ -6,13 +6,17 @@ Ao copiar este projeto deve-se fazer as seguintes configurações:
 
 Definir as seguintes variaveis de ambiente
 
-    DATABASE_SCHEMA_NAME=base_backend_java;
-    DB_NAME=POSTGRES;
-    DB_PASSWORD=229977@@##;
-    DB_USERNAME=postgres;
-    SECRET_JWT=;
-    SERVER_PORT=8081;
-    SERVICE_NAME=basebackend;
+    DATABASE_SCHEMA_NAME=base_backend_java
+    DB_NAME=POSTGRES
+    DB_PASSWORD=229977@@##
+    DB_USERNAME=postgres
+    SECRET_JWT=
+    SERVER_PORT=8081
+    SERVICE_NAME=basebackend
+    AWS_ACCESS=
+    AWS_SECRET=
+    PASSWORD_EMAIL=
+
 
 O projeto é configurado para ser multitenancy com locatarios usando schemas
 
