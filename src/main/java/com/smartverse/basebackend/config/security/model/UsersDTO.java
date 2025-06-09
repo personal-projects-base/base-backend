@@ -7,6 +7,7 @@ public record UsersDTO(
         UUID id,
         String name,
         String email,
+        String phone,
         String password,
         String tenant,
         List<String> roles

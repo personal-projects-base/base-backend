@@ -72,6 +72,7 @@ public class AuthenticationService {
         var user = new UsersEntity();
         user.setName(register.name());
         user.setEmail(register.email());
+        user.setPhone(register.phone());
         var pass = new BCryptPasswordEncoder().encode(register.password());
         user.setPassword(pass);
         user.setUserConfirm(false);
