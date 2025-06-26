@@ -5,6 +5,7 @@ import com.potatotech.authorization.security.Authenticate;
 import com.potatotech.authorization.security.UserSupplier;
 import com.potatotech.authorization.tenant.TenantContext;
 
+import com.smartverse.basebackend.config.context.ConfigContextImpl;
 import com.smartverse.basebackend.config.security.model.RegisterDTO;
 import com.smartverse.basebackend.config.security.model.UsersDTO;
 import com.smartverse.basebackend.config.security.model.UsersEntity;
@@ -29,6 +30,9 @@ public class AuthenticationService {
 
     @Autowired
     EmailService emailService;
+
+    @Autowired
+    ConfigContextImpl configContext;
 
     public String login(UsersDTO userSupplierDTO){
         TenantContext.setCurrentTenant("admin");
@@ -77,11 +81,9 @@ public class AuthenticationService {
         user.setPassword(pass);
         user.setUserConfirm(false);
         user.setActive(false);
-        user.setTenant(String.format("SMARTVARSE_%s",count));
+        user.setTenant(String.format("%s_%s",configContext.getDatabase().toUpperCase(),count));
 
         user = authenticationRepository.save(user);
-
-
 
 
         return true;
