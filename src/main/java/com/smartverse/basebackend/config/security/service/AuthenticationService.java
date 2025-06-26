@@ -31,8 +31,6 @@ public class AuthenticationService {
     @Autowired
     EmailService emailService;
 
-    @Autowired
-    ConfigContextImpl configContext;
 
     public String login(UsersDTO userSupplierDTO){
         TenantContext.setCurrentTenant("admin");
@@ -81,7 +79,7 @@ public class AuthenticationService {
         user.setPassword(pass);
         user.setUserConfirm(false);
         user.setActive(false);
-        user.setTenant(String.format("%s_%s",configContext.getDatabase().toUpperCase(),count));
+        user.setTenant(String.format("SMARTVERSE_%s",count));
 
         user = authenticationRepository.save(user);
 
