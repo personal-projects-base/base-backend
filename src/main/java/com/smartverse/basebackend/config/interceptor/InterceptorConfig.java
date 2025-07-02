@@ -1,6 +1,7 @@
 package com.smartverse.basebackend.config.interceptor;
 
 
+import com.potatotech.authorization.exception.ServiceException;
 import com.potatotech.authorization.security.Authenticate;
 import com.potatotech.authorization.tenant.TenantConfiguration;
 import com.potatotech.authorization.tenant.TenantContext;
@@ -11,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -43,17 +45,16 @@ public class InterceptorConfig extends Authenticate implements HandlerIntercepto
             tenant = "public";
         }
 
-//        if(!tenantConfiguration.validAnonymous(handler)){
-//            var user = this.isAuthenticated(auth);
-//            TenantContext.setCurrentTenant(user.getTenant());
-//        } else {
-//            if(tenant == null){
-//                throw new ServiceException(HttpStatus.FORBIDDEN,"tenant is required");
-//            }
-//            TenantContext.setCurrentTenant(tenant);
-//        }
-
-        TenantContext.setCurrentTenant("public");
+      if(!tenantConfiguration.validAnonymous(handler)){
+            var user = this.isAuthenticated(auth);
+            TenantContext.setCurrentTenant(user.getTenant());
+            tenant = user.getTenant();
+        } else {
+            if(tenant == null){
+                throw new ServiceException(HttpStatus.FORBIDDEN,"tenant is required");
+            }
+            TenantContext.setCurrentTenant(tenant);
+        }
         dbMigration.loadMigrateTenants(tenant);
         return true;
     }

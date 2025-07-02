@@ -19,16 +19,7 @@
             "nullable": false,
             "key": true
           },
-          "list": false,
-          "frontendProperties": {
-            "label": "",
-            "size": 0,
-            "hidden": false,
-            "order": 0,
-            "guidance": "",
-            "reference": "",
-            "enableFieldsFilter": false
-          }
+          "list": false
         },
         {
           "comment": "Nome do usuário",
@@ -42,16 +33,7 @@
             "nullable": false,
             "key": false
           },
-          "list": false,
-          "frontendProperties": {
-            "label": "",
-            "size": 0,
-            "hidden": false,
-            "order": 0,
-            "guidance": "",
-            "reference": "",
-            "enableFieldsFilter": false
-          }
+          "list": false
         },
         {
           "comment": "Foto Usuário",
@@ -65,16 +47,7 @@
             "nullable": true,
             "key": false
           },
-          "list": false,
-          "frontendProperties": {
-            "label": "",
-            "size": 0,
-            "hidden": false,
-            "order": 0,
-            "guidance": "",
-            "reference": "",
-            "enableFieldsFilter": false
-          }
+          "list": false
         },
         {
           "comment": "Tema",
@@ -88,16 +61,7 @@
             "nullable": true,
             "key": false
           },
-          "list": false,
-          "frontendProperties": {
-            "label": "",
-            "size": 0,
-            "hidden": false,
-            "order": 0,
-            "guidance": "",
-            "reference": "",
-            "enableFieldsFilter": false
-          }
+          "list": false
         },
         {
           "comment": "Linguagem sistema",
@@ -111,16 +75,7 @@
             "nullable": false,
             "key": false
           },
-          "list": false,
-          "frontendProperties": {
-            "label": "",
-            "size": 0,
-            "hidden": false,
-            "order": 0,
-            "guidance": "",
-            "reference": "",
-            "enableFieldsFilter": false
-          }
+          "list": false
         },
         {
           "comment": "Email",
@@ -134,16 +89,21 @@
             "nullable": false,
             "key": false
           },
-          "list": false,
-          "frontendProperties": {
-            "label": "",
-            "size": 0,
-            "hidden": false,
-            "order": 0,
-            "guidance": "",
-            "reference": "",
-            "enableFieldsFilter": false
-          }
+          "list": false
+        },
+        {
+          "comment": "Telefone",
+          "fieldName": "phone",
+          "fieldProperties": {
+            "fieldType": "string",
+            "required": true,
+            "valueDefault": ""
+          },
+          "metadata": {
+            "nullable": false,
+            "key": false
+          },
+          "list": false
         },
         {
           "comment": "ID do usuário",
@@ -157,16 +117,7 @@
             "nullable": false,
             "key": false
           },
-          "list": false,
-          "frontendProperties": {
-            "label": "",
-            "size": 0,
-            "hidden": false,
-            "order": 0,
-            "guidance": "",
-            "reference": "",
-            "enableFieldsFilter": false
-          }
+          "list": false
         }
       ],
       "classExtends": "",
@@ -254,7 +205,7 @@
   ],
   "endpoints": [
     {
-      "methodName": "getUserData",
+      "methodName": "getUser",
       "httpMethod": "GET",
       "grouper": "",
       "metadata": {
@@ -268,21 +219,33 @@
         ],
         "output": [
           {
-            "parameterName": "name",
-            "parameterType": "string",
-            "list": false
-          },
-          {
-            "parameterName": "phone",
-            "parameterType": "string",
-            "list": false
-          },
-          {
-            "parameterName": "email",
-            "parameterType": "string",
+            "parameterName": "output",
+            "parameterType": "userConfiguration",
             "list": false
           }
         ]
+      }
+    },
+    {
+      "methodName": "verifyURL",
+      "httpMethod": "GET",
+      "grouper": "",
+      "metadata": {
+        "input": [
+          {
+            "parameterName": "token",
+            "parameterType": "string",
+            "list": false
+          }
+        ],
+        "output": [
+          {
+            "parameterName": "authorize",
+            "parameterType": "boolean",
+            "list": false
+          }
+        ],
+        "anonymous": true
       }
     }
   ],
@@ -300,6 +263,13 @@
         "PORTUGUESE",
         "ENGLISH",
         "SPANISH"
+      ]
+    },
+    {
+      "enumName": "status",
+      "values": [
+        "ACTIVE",
+        "INACTIVE"
       ]
     }
   ]
