@@ -33,8 +33,9 @@ public class HibernateConfig {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource,MultiTenantConnectionProvider multiTenantConnectionProviderImpl,
-            CurrentTenantIdentifierResolver currentTenantIdentifierResolverImpl) {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource,
+            MultiTenantConnectionProvider<String> multiTenantConnectionProviderImpl,
+            CurrentTenantIdentifierResolver<String> currentTenantIdentifierResolverImpl) {
         Map<String, Object> properties = new HashMap<>(jpaProperties.getProperties());
         properties.put(Environment.MULTI_TENANT_CONNECTION_PROVIDER, multiTenantConnectionProviderImpl);
         properties.put(Environment.MULTI_TENANT_IDENTIFIER_RESOLVER, currentTenantIdentifierResolverImpl);

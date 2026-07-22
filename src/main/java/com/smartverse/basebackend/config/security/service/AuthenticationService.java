@@ -5,12 +5,10 @@ import com.potatotech.authorization.security.Authenticate;
 import com.potatotech.authorization.security.UserSupplier;
 import com.potatotech.authorization.tenant.TenantContext;
 
-import com.smartverse.basebackend.config.context.ConfigContextImpl;
 import com.smartverse.basebackend.config.security.model.RegisterDTO;
 import com.smartverse.basebackend.config.security.model.UsersDTO;
 import com.smartverse.basebackend.config.security.model.UsersEntity;
 import com.smartverse.basebackend.config.security.repository.AuthenticationRepository;
-import com.smartverse.basebackend.services.email.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,8 +26,6 @@ public class AuthenticationService {
     @Autowired
     Authenticate authenticate;
 
-    @Autowired
-    EmailService emailService;
 
 
     public String login(UsersDTO userSupplierDTO){
@@ -82,7 +78,6 @@ public class AuthenticationService {
         user.setTenant(String.format("SMARTVERSE_%s",count));
 
         user = authenticationRepository.save(user);
-
 
         return true;
     }

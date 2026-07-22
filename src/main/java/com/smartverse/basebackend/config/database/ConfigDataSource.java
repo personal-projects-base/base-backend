@@ -8,7 +8,7 @@ import java.util.Map;
 
 
 @Component
-public class ConfigDataSource  implements CurrentTenantIdentifierResolver, HibernatePropertiesCustomizer {
+public class ConfigDataSource implements CurrentTenantIdentifierResolver<String>, HibernatePropertiesCustomizer {
 
     public static String DEFAULT_TENANT = "public";
 

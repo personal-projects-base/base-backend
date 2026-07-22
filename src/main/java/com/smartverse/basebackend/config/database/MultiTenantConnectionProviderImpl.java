@@ -12,7 +12,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 @Component
-public class MultiTenantConnectionProviderImpl implements MultiTenantConnectionProvider {
+public class MultiTenantConnectionProviderImpl implements MultiTenantConnectionProvider<String> {
 
     @Autowired
     ConfigContextImpl configContext;
@@ -58,7 +58,7 @@ public class MultiTenantConnectionProviderImpl implements MultiTenantConnectionP
     }
 
     @Override
-    public boolean isUnwrappableAs(Class clazz) {
+    public boolean isUnwrappableAs(Class<?> clazz) {
         return false;
     }
 
