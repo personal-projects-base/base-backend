@@ -37,6 +37,50 @@ As interfaces de multitenancy já foram adaptadas para os tipos genéricos do Hi
 
 A compilação das APIs foi validada com sucesso usando um alvo Java temporário compatível com o JDK disponível no ambiente de manutenção. Depois de copiar o template, o build e a execução final devem ser validados com um JDK 25 completo.
 
+## Padrão obrigatório de geração com Gonthera CLI
+
+Todo projeto derivado deste template deve trabalhar com o padrão de geração de código do `gonthera-cli`. A referência operacional e arquitetural mantida neste repositório é:
+
+- [`docs/skill/entity-generator-project/SKILL.md`](../../skill/entity-generator-project/SKILL.md)
+
+Antes de configurar entidades, endpoints, enums, relacionamentos, mensageria ou extensões de CRUD em um projeto copiado, ler esse skill e seguir o contrato descrito nele.
+
+Para projetos Java, o `gonthera-cli` lê a configuração do projeto e gera código Spring/JPA no pacote `<mainPackage>_gen`, incluindo, conforme a configuração:
+
+- entidades e DTOs;
+- conversores;
+- repositories;
+- services;
+- controllers e endpoints;
+- enums e recursos comuns;
+- integração RabbitMQ;
+- scripts SQL e recursos associados.
+
+Regras essenciais para projetos derivados:
+
+- usar `.gonthera/project.json` como configuração principal;
+- quando necessário, separar as seções em `.gonthera/entities.json`, `.gonthera/endpoints.json`, `.gonthera/enums.json` e `.gonthera/messaging.json`;
+- considerar `project.json` ou `properties.json` na raiz apenas como formatos legados durante a transição;
+- validar a configuração com `./mvnw gonthera-cli:validate`;
+- gerar com `./mvnw gonthera-cli:generate-sources`;
+- nunca editar arquivos dentro dos pacotes `_gen` como fonte definitiva, pois eles podem ser substituídos na próxima geração;
+- manter regras e customizações do projeto fora de `_gen`, estendendo services ou controllers gerados conforme o padrão do skill;
+- usar os nomes atuais `generateDefaultControllers`, `controllerAbstract` e `serviceAbstract`; os nomes antigos relacionados a handlers são apenas aliases depreciados;
+- quando `serviceAbstract: true`, fornecer exatamente uma implementação Spring concreta fora de `_gen`;
+- quando `controllerAbstract: true`, fornecer um controller Spring concreto fora de `_gen`;
+- não duplicar beans ou rotas já fornecidos pelas implementações concretas geradas.
+
+O fluxo esperado é:
+
+```text
+.gonthera/*.json
+    -> gonthera-cli:validate
+    -> gonthera-cli:generate-sources
+    -> revisão do código gerado
+    -> implementação das customizações fora de _gen
+    -> compilação e testes do projeto
+```
+
 ## Como iniciar um novo projeto a partir daqui
 
 Depois de copiar o repositório, substituir pelo menos os identificadores abaixo:
@@ -47,10 +91,11 @@ Depois de copiar o repositório, substituir pelo menos os identificadores abaixo
 4. Atualizar a classe `StarterApplication` e todas as referências ao pacote raiz.
 5. Atualizar `SERVICE_NAME`, o context path e a URL documentada do Swagger.
 6. Definir o nome do banco/schema do novo serviço.
-7. Revisar `src/main/resources/properties.json` ou `.gonthera/properties.json`, conforme o fluxo utilizado pelo gerador.
+7. Criar ou revisar `.gonthera/project.json` e seus arquivos separados conforme o contrato do `gonthera-cli`.
 8. Remover módulos opcionais que o novo serviço não utilizará.
 9. Criar as migrations e entidades específicas do novo domínio.
-10. Criar um novo handoff dentro de `docs/handoff/<nome-do-projeto>/`, sem sobrescrever este documento nem handoffs de projetos integrados.
+10. Validar e gerar o código com o `gonthera-cli` antes de implementar customizações.
+11. Criar um novo handoff dentro de `docs/handoff/<nome-do-projeto>/`, sem sobrescrever este documento nem handoffs de projetos integrados.
 
 ## Variáveis de ambiente
 
@@ -97,6 +142,8 @@ A implementação normaliza esse nome para maiúsculas ao selecionar e migrar sc
 Com o JDK 25 configurado em `JAVA_HOME`, executar:
 
 ```bash
+./mvnw gonthera-cli:validate
+./mvnw gonthera-cli:generate-sources
 ./mvnw clean compile
 ./mvnw test
 ./mvnw spring-boot:run
@@ -123,6 +170,8 @@ Ao continuar, registrar aqui ou no handoff específico do novo projeto:
 - decisões de banco e multitenancy;
 - novas variáveis de ambiente;
 - migrations criadas;
+- configuração e artefatos gerados pelo `gonthera-cli`;
+- customizações criadas fora dos pacotes `_gen`;
 - endpoints e regras de negócio adicionados;
 - pendências, riscos e último comando de validação executado.
 
