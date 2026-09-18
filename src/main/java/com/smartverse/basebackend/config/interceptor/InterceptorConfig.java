@@ -1,90 +1,66 @@
 package com.smartverse.basebackend.config.interceptor;
 
 
-import com.potatotech.authorization.exception.ServiceException;
-import com.potatotech.authorization.security.Authenticate;
-import com.potatotech.authorization.tenant.TenantConfiguration;
 import com.potatotech.authorization.tenant.TenantContext;
-import com.smartverse.basebackend.config.context.EnumConfigContext;
 import com.smartverse.basebackend.config.migration.DBMigration;
-import feign.Request;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class InterceptorConfig extends Authenticate implements HandlerInterceptor, WebMvcConfigurer  {
+public class InterceptorConfig implements HandlerInterceptor, WebMvcConfigurer  {
 
+    private final DBMigration dbMigration;
+    private final InterceptorExclusions exclusions;
+    private final TenantResolver tenantResolver;
 
-    @Autowired
-    DBMigration dbMigration;
-    private static final String AUTHORIZATION = "Authorization";
-    private static final String TENANT = "Xtenant";
+    public InterceptorConfig(
+            DBMigration dbMigration,
+            InterceptorExclusions exclusions,
+            TenantResolver tenantResolver) {
+        this.dbMigration = dbMigration;
+        this.exclusions = exclusions;
+        this.tenantResolver = tenantResolver;
+    }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
-        var tenantConfiguration = new TenantConfiguration();
+        clearTenantContext();
 
-        String uri = request.getRequestURI();
-
-        if(validateDomainsAllowAccess(uri)){
-            return true;
-        }
-
-        if(isOptions(request)){
-            return true;
-        }
-        var auth = request.getHeader(AUTHORIZATION);
-        var tenant = request.getHeader(TENANT);
-        if(tenant == null){
-            tenant = "public";
-        }
-
-      if(!tenantConfiguration.validAnonymous(handler)){
-            var user = this.isAuthenticated(auth);
-            TenantContext.setCurrentTenant(user.getTenant());
-            tenant = user.getTenant();
-        } else {
-            if(tenant == null){
-                throw new ServiceException(HttpStatus.FORBIDDEN,"tenant is required");
+        try {
+            if(exclusions.shouldSkip(request)){
+                return true;
             }
+
+            var tenant = tenantResolver.resolve(request, handler);
             TenantContext.setCurrentTenant(tenant);
-        }
-        dbMigration.loadMigrateTenants(tenant);
-        return true;
-    }
-
-    private boolean validateDomainsAllowAccess(String uri) {
-
-        // valida swagger
-        if(uri.startsWith("/"+System.getenv(EnumConfigContext.SERVICE_NAME.name())+"/swagger-ui/") || uri.startsWith("/"+System.getenv(EnumConfigContext.SERVICE_NAME.name())+"/v3/")) {
+            dbMigration.loadMigrateTenants(tenant);
             return true;
-        } // valida login e register
-        else if(uri.startsWith("/"+System.getenv(EnumConfigContext.SERVICE_NAME.name())+"/authenticate") || uri.startsWith("/"+System.getenv(EnumConfigContext.SERVICE_NAME.name())+"/register") || uri.startsWith("/"+System.getenv(EnumConfigContext.SERVICE_NAME.name())+"/verifyURL")) {
-            TenantContext.setCurrentTenant("admin");
-            dbMigration.loadMigrateTenants("admin");
-            return true;
-        }
-        else if(uri.startsWith("/"+System.getenv(EnumConfigContext.SERVICE_NAME.name())+"/error")) {
-            return true;
-        }
-        else {
-            return false;
+        } catch (RuntimeException | Error exception) {
+            clearTenantContext();
+            throw exception;
         }
     }
 
-
-    private boolean isOptions(HttpServletRequest request){
-        return Request.HttpMethod.OPTIONS.name().equals(request.getMethod());
+    @Override
+    public void afterCompletion(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            Object handler,
+            Exception exception) {
+        clearTenantContext();
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry){
         registry.addInterceptor(this);
+    }
+
+    private void clearTenantContext() {
+        TenantContext.setCurrentTenant(null);
+        TenantContext.setCurrentUser(null);
     }
 }

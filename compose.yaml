@@ -1,0 +1,9 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - ${ENV_FILE:-.env}
+    network_mode: host
+    init: true
