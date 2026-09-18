@@ -101,14 +101,48 @@ O código `_gen` não é renomeado pelo configurador. Ele será descartado e rec
 
 ### Documentação do projeto derivado
 
-Cada serviço criado a partir deste template deve manter dois documentos próprios:
+Cada serviço criado a partir deste template deve manter regras e documentos próprios:
 
+- `docs/rule/PROJECT_RULES.md`: regras obrigatórias de desenvolvimento válidas para todo o projeto;
 - `docs/handoff/<nome-do-projeto>/HANDOFF.md`: contexto atual do desenvolvimento, decisões tomadas, estado das entregas, validações executadas e pendências;
 - `docs/skill/<nome-do-projeto>/SKILL.md`: regras estáveis e específicas que orientam como analisar, alterar, gerar e validar o projeto.
 
+> [!IMPORTANT]
+> Antes de analisar, planejar ou implementar qualquer alteração, leia integralmente `docs/rule/PROJECT_RULES.md` e o `HANDOFF.md` do serviço. Leia também os documentos complementares indicados pelo handoff que sejam relevantes para a tarefa. Nenhum desenvolvimento deve começar sem que as regras e o contexto atual tenham sido compreendidos.
+
 O handoff do template começa vazio e deve ser renomeado e preenchido conforme o contexto real do novo serviço. Ele não deve repetir a documentação oficial do Gonthera CLI nem ser usado como manual genérico.
 
+Todo contexto de continuidade deve ser registrado no handoff, e não espalhado em arquivos sem referência. Ao mesmo tempo, não concentre todo o histórico, arquitetura e estado do serviço em um único `HANDOFF.md`. Quando o conteúdo ficar extenso ou difícil de consultar, mantenha o `HANDOFF.md` como índice e resumo atual e distribua os detalhes em arquivos temáticos dentro da mesma pasta.
+
+Exemplo:
+
+```text
+docs/handoff/customer-service/
+├── HANDOFF.md
+├── architecture.md
+├── integrations.md
+└── deliveries/
+    └── customer-import.md
+```
+
+O arquivo principal deve indicar claramente quando cada documento complementar precisa ser consultado. Evite duplicar a mesma informação em mais de um lugar.
+
 O skill deve conter apenas orientações específicas que mudem decisões de desenvolvimento naquele projeto. Não inclua conselhos genéricos, histórico de trabalho ou cópias de documentação externa. A documentação oficial do Gonthera CLI para Java continua sendo a fonte de verdade para o gerador.
+
+Também não concentre todas as regras e referências em um `SKILL.md` muito grande. Mantenha nele o propósito, as regras essenciais e o direcionamento para arquivos complementares. Detalhes extensos devem ser separados por assunto em `references/` e carregados somente quando forem relevantes para a tarefa.
+
+Exemplo:
+
+```text
+docs/skill/customer-service/
+├── SKILL.md
+└── references/
+    ├── database.md
+    ├── integrations.md
+    └── security.md
+```
+
+Cada referência deve ser mencionada no `SKILL.md`, com uma orientação objetiva sobre quando deve ser lida.
 
 ## Configuração do ambiente
 
